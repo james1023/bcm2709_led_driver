@@ -8,7 +8,7 @@
 
 // GPIO macros
 #define INP_GPIO_04(b)          *(volatile unsigned int *)(0x00000000+b) &= (unsigned int)0xFFFF8FFF
-#define OUT_GPOP_04(b)          *(volatile unsigned int *)(0x00000000+b) |= (unsigned int)0x00001000
+#define OUT_GPIO_04(b)          *(volatile unsigned int *)(0x00000000+b) |= (unsigned int)0x00001000
 
 #define GPIO_SET_04(b)          *(volatile unsigned int *)(0x0000001C+b) |= 0x10
 #define GPIO_CLR_04(b)          *(volatile unsigned int *)(0x00000028+b) |= 0x10
@@ -37,7 +37,7 @@ static int hello_init(void)
 {
     printk("Hello, LED World! \n");
     
-    OUT_GPIO_O4(GPIO_BASE);
+    OUT_GPIO_04(GPIO_BASE);
     
     init_timer(&led_timer);
     led_timer.function = hello_timer;
