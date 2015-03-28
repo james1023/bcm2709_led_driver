@@ -1,9 +1,7 @@
 obj-m := hello.o
 
-KDIR := /home/workspace/opt/rpi/linux
-
 default:
-	$(MAKE) -C $(KDIR) M=$(shell pwd) modules
+	$(MAKE) -C $(KERNELDIR) M=$(shell pwd) modules
 
 clean:
-	$(MAKE) -C $(KDIR) M=$(shell pwd) clean
+	$(MAKE) -C $(KERNELDIR) M=$(shell pwd) clean
