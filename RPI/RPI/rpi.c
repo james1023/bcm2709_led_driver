@@ -77,12 +77,12 @@ int main(int argc, char **argv)
     
     for (rep=0; rep<10; rep++)
     {
-        for (g=0; g<=5; g++)
+        for (g=0; g<=3; g++)
         {
             GPIO_SET = 1<<g;
             sleep(1);
         }
-        for (g=0; g<=5; g++)
+        for (g=0; g<=3; g++)
         {
             GPIO_CLR = 1<<g;
             sleep(1);
