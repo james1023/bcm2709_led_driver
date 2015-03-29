@@ -8,7 +8,7 @@ volatile unsigned long *gpio = NULL;
 // #define GPIO_BASE            0X20200000
 
 // rpi2
-#define GPIO_BASE               0x3F000000
+#define GPIO_BASE               0x3F200000
 #define BLOCK_SIZE              4096
 
 // GPIO macros
