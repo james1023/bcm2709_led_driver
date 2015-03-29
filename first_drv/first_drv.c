@@ -6,7 +6,6 @@
 #include <asm/uaccess.h>
 #include <asm/irq.h>
 #include <asm/io.h>
-#include <asm/arch/regs-gpio.h>
 #include <asm/hardware.h>
 
 
