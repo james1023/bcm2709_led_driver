@@ -2,7 +2,11 @@
 #include <linux/module.h>
 #include <linux/timer.h>
 
+// rpi1
 // #define GPIO_BASE            0X20200000
+
+// rpi2
+// #define GPIO_BASE            0x3F000000
 #define GPIO_BASE               0XF2200000
 #define BLOCK_SIZE              4096
 
