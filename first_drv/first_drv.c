@@ -3,13 +3,13 @@
 #include <linux/fs.h>
 #include <linux/init.h>
 #include <linux/delay.h>
+#include <linux/device.h>
 #include <asm/uaccess.h>
 #include <asm/irq.h>
 #include <asm/io.h>
-#include <asm/hardware.h>
 
 
-volatile unsigned *gpio;
+volatile unsigned long *gpio;
 
 #define BCM2709_PERI_BASE        0x3F000000
 #define GPIO_BASE                (BCM2709_PERI_BASE + 0x200000)
@@ -27,7 +27,6 @@ volatile unsigned *gpio;
 #define GPIO_PULLCLK0 *(gpio+38) // Pull up/pull down clock
 
 static struct class *firstdrv_class;
-static struct class_device	*firstdrv_class_dev;
 
 static int first_drv_open(struct inode *inode, struct file *file)
 {
@@ -72,7 +71,7 @@ static int first_drv_init(void)
 
 	firstdrv_class = class_create(THIS_MODULE, "firstdrv");
 
-	firstdrv_class_dev = class_device_create(firstdrv_class, NULL, MKDEV(major, 0), NULL, "xyz"); /* /dev/xyz */
+    device_create(firstdrv_class, NULL, MKDEV(major, 0), NULL, "xyz");
 
 	gpio = (volatile unsigned long *)ioremap(GPIO_BASE, 16);
 	
@@ -83,9 +82,9 @@ static void first_drv_exit(void)
 {
 	unregister_chrdev(major, "first_drv");
 
-	class_device_unregister(firstdrv_class_dev);
+	device_destroy(firstdrv_class, MKDEV(major, 0));
 	class_destroy(firstdrv_class);
-	iounmap(gpfcon);
+	iounmap(gpio);
 }
 
 module_init(first_drv_init);
