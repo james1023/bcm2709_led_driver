@@ -69,7 +69,7 @@ int main(int argc, char **argv)
      \************************************************************************/
     
     // Set GPIO pins 7-11 to output
-    for (g=7; g<=11; g++)
+    for (g=0; g<=5; g++)
     {
         INP_GPIO(g); // must use INP_GPIO before we can use OUT_GPIO
         OUT_GPIO(g);
@@ -77,12 +77,12 @@ int main(int argc, char **argv)
     
     for (rep=0; rep<10; rep++)
     {
-        for (g=7; g<=11; g++)
+        for (g=0; g<=5; g++)
         {
             GPIO_SET = 1<<g;
             sleep(1);
         }
-        for (g=7; g<=11; g++)
+        for (g=0; g<=5; g++)
         {
             GPIO_CLR = 1<<g;
             sleep(1);
