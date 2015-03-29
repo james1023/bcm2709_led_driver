@@ -2,12 +2,13 @@
 #include <linux/module.h>
 #include <linux/timer.h>
 
+volatile unsigned long *gpio = NULL;
+
 // rpi1
 // #define GPIO_BASE            0X20200000
 
 // rpi2
-// #define GPIO_BASE            0x3F000000
-#define GPIO_BASE               0XF2200000
+#define GPIO_BASE               0x3F000000
 #define BLOCK_SIZE              4096
 
 // GPIO macros
@@ -25,11 +26,11 @@ static void hello_timer(unsigned long ptr)
 {
     printk("jiffies + HZ = %ld + %ld\n", jiffies, HZ);
     if (status == 0) {
-        GPIO_SET_04(GPIO_BASE);
+        GPIO_SET_04(gpio);
         status = 1;
     }
     else {
-        GPIO_CLR_04(GPIO_BASE);
+        GPIO_CLR_04(gpio);
         status = 0;
     }
     
@@ -41,7 +42,11 @@ static int hello_init(void)
 {
     printk("Hello, LED World! \n");
     
-    OUT_GPIO_04(GPIO_BASE);
+    gpio = (volatile unsigned long *)ioremap(GPIO_BASE, 16);
+    
+    printk("gpio=%#x. \n", gpio);
+    
+    OUT_GPIO_04(gpio);
     
     init_timer(&led_timer);
     led_timer.function = hello_timer;
@@ -55,6 +60,7 @@ static int hello_init(void)
 static void hello_exit(void)
 {
     del_timer(&led_timer);
+    iounmap(gpio);
     printk("byte. \n");
 }
 
